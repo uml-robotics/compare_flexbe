@@ -10,13 +10,14 @@ from contact_graspnet_ros2.msg import Grasps
 
 import subprocess, os
 import numpy as np
+import numpy as np
+
 
 
 
 class CGNGraspRGBDServiceState(EventState):
     """
     Calls the Contact-GraspNet `get_grasps_rgbd` service using only a precomputed
-
     scene name (RGBD pipeline).
 
     Assumes the server:
@@ -41,7 +42,6 @@ class CGNGraspRGBDServiceState(EventState):
     def __init__(self,
                  service_timeout: float = 10.0,
                  service_name: str = '/get_grasps_rgbd'):
-
         super().__init__(
             outcomes=['done', 'failed'],
             input_keys=['scene_name'],
@@ -98,7 +98,6 @@ class CGNGraspRGBDServiceState(EventState):
             # ]
             # subprocess.check_call(cmd)
             # Logger.loginfo(f"[CGNGraspRGBDServiceState] Plotted grasp poses in 3d open view using result_plotter'.")
-            
 
         except Exception as e:
             Logger.logerr(f"[CGNGraspRGBDServiceState] Service call failed: {e}")
@@ -111,11 +110,16 @@ class CGNGraspRGBDServiceState(EventState):
 
         try:
 
+            # time.sleep(15)
             grasps = self._res.grasps  # type: Grasps
             userdata.grasp_target_poses = list(grasps.poses)
             userdata.grasp_scores = list(grasps.scores)
             userdata.grasp_samples = list(grasps.samples)
             userdata.grasp_object_ids = list(grasps.object_ids)
+            # Logger.loginfo(f"[CGNGraspRGBDServiceState] grasps.object_ids = {grasps.object_ids}, userdata.grasp_object_ids {userdata.grasp_object_ids}.")
+
+            Logger.loginfo(f"[CGNGraspRGBDServiceState] Received {len(grasps.poses)} grasp poses for grasp_object_ids: {np.unique(userdata.grasp_object_ids)}.")
+
             # Logger.loginfo(f"[CGNGraspRGBDServiceState] grasps.object_ids = {grasps.object_ids}, userdata.grasp_object_ids {userdata.grasp_object_ids}.")
 
             Logger.loginfo(f"[CGNGraspRGBDServiceState] Received {len(grasps.poses)} grasp poses for grasp_object_ids: {np.unique(userdata.grasp_object_ids)}.")

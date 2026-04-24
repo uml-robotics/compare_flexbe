@@ -102,7 +102,7 @@ class MoveToPoseServiceState(EventState):
 
         # wait for availability (once per entry)
         if not self._srv.is_available(self._service_name):
-            Logger.logerr(f"[{type(self).__name__}] Service '{self._service_name}' not available after {self._service_timeout}s.")
+            Logger.logerr(f"[{type(self).__name__}] Service '{self._service_name}' not available after {self._timeout_sec}s.")
             self._had_error = True
             return
 

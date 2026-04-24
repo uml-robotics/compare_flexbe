@@ -114,6 +114,7 @@ class UnseenObjClusterContactGraspnetPipeineSM(Behavior):
         _state_machine.userdata.grasp_samples = []
         _state_machine.userdata.grasp_object_ids = []
         _state_machine.userdata.grasp_index = 0
+<<<<<<< local_main_cgn
 
         # Additional creation code can be added inside the following tags
         # [MANUAL_CREATE]
@@ -301,6 +302,8 @@ class UnseenObjClusterContactGraspnetPipeineSM(Behavior):
         _state_machine.userdata.grasp_samples = []
         _state_machine.userdata.grasp_object_ids = []
         _state_machine.userdata.grasp_index = 0
+=======
+>>>>>>> feature/cgn
         _state_machine.userdata.manual_target_instance_id = -1
 
         # Additional creation code can be added inside the following tags
