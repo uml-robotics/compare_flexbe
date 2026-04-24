@@ -30,7 +30,7 @@ find_package(PCL REQUIRED)
 find_package(builtin_interfaces REQUIRED)
 find_package(visualization_msgs REQUIRED)
 
-# Generate service
+# Generate services (⚠️ gpd_ros REMOVED from DEPENDENCIES)
 rosidl_generate_interfaces(${PROJECT_NAME}
   "srv/CartesianMoveToPose.srv"
   "srv/MoveToNamedPose.srv"
@@ -52,7 +52,6 @@ include_directories(
   ${PCL_INCLUDE_DIRS}
 )
 
-# Create executable
 add_executable(cartesian_move_to_pose_service src/cartesian_move_to_pose_service.cpp)
 ament_target_dependencies(cartesian_move_to_pose_service
   rclcpp
@@ -167,16 +166,10 @@ target_link_libraries(mtc_plan_and_execute_pick_action ${cpp_typesupport_target}
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
-  # the following line skips the linter which checks for copyrights
-  # comment the line when a copyright and license is added to all source files
   set(ament_cmake_copyright_FOUND TRUE)
-  # the following line skips cpplint (only works in a git repo)
-  # comment the line when this package is in a git repo and when
-  # a copyright and license is added to all source files
   set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
-
 
 ament_export_dependencies(rosidl_default_runtime)
 ament_package()

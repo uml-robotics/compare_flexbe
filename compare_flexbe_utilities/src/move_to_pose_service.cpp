@@ -85,20 +85,67 @@ private:
       if (exec_result == moveit::core::MoveItErrorCode::SUCCESS)
       {
         RCLCPP_INFO(this->get_logger(), "Motion to pose succeeded.");
-        res->success = true;
+        res->success = true; // comment out if adding additional pick and place later in this script
       }
       else
       {
         RCLCPP_ERROR(this->get_logger(), "Motion execution failed.");
         res->success = false;
       }
-    }
+
+      // Additional step test: Lift vertically in base frame (planning frame)
+    //   bool flg_liftUp = moveInBaseZ(req, 0.05);
+    //   if (flg_liftUp)
+    //   {
+    //     res->success = true;
+    //     RCLCPP_INFO(this->get_logger(), "Motion to lift object succeeded.");
+    //     return;
+    //   }
+    //   else
+    //   {
+    //     res->success = false;
+    //     RCLCPP_ERROR(this->get_logger(),"Failed to lift object.");
+    //     return;
+    //   }
+      
+    }      
     catch (const std::exception &e)
     {
       RCLCPP_ERROR(this->get_logger(), "Exception during planning or execution: %s", e.what());
       res->success = false;
     }
   }
+
+  bool moveInBaseZ(const std::shared_ptr<compare_flexbe_utilities::srv::MoveToPose::Request> req,  double dz)
+  {
+    const std::string ee_link = move_group_->getEndEffectorLink();
+    // geometry_msgs::msg::PoseStamped current = move_group_->getCurrentPose(ee_link);
+
+    geometry_msgs::msg::Pose target = req->target_pose; // current.pose;
+    target.position.z += dz;  // base frame Z
+
+    RCLCPP_INFO(this->get_logger(), "target.position.z = %f", target.position.z);
+
+    move_group_->setPoseTarget(target, ee_link);
+
+    moveit::planning_interface::MoveGroupInterface::Plan plan;
+    auto result = move_group_->plan(plan);
+    if (result != moveit::core::MoveItErrorCode::SUCCESS)
+    {
+      RCLCPP_WARN(this->get_logger(), "Planning base-Z lift failed.");
+      return false;
+    }
+
+    auto exec = move_group_->execute(plan);
+    if (exec != moveit::core::MoveItErrorCode::SUCCESS)
+    {
+      RCLCPP_ERROR(this->get_logger(), "Execution of base-Z lift failed.");
+      return false;
+    }
+
+    return true;
+  }
+
 };
 
 int main(int argc, char **argv)

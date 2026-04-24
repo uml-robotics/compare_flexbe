@@ -8,6 +8,14 @@ Below we provide basic details, but you are free to delete or modify this README
 
 ----
 
+Bringup command:
+```bash
+ros2 launch armada_bringup gazebo_move_group.launch.py workstation:=pedestal_workstation headless:=True launch_flexbe:=True
+```
+
+---
+
+
 This raw repository has several folders and files with the generic name `compare`.
 
 

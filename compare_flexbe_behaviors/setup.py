@@ -22,6 +22,7 @@ setup(
     entry_points={
         'console_scripts': [
             'example_behavior_sm = compare_flexbe_behaviors.example_behavior_sm',
+            'example_behavior_sm2 = compare_flexbe_behaviors.example_behavior_sm2',
         ],
     },
 )
