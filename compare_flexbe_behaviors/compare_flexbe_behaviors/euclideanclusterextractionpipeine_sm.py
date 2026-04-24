@@ -3,6 +3,32 @@
 
 # Copyright 2025 Brian Flynn
 #
+<<<<<<< local_main_cgn
+# Redistribution and use in source and binary forms, with or without modification,
+# are permitted provided that the following conditions are met:
+#
+#  1. Redistributions of source code must retain the above copyright notice,
+#     this list of conditions and the following disclaimer.
+
+#  2. Redistributions in binary form must reproduce the above copyright notice,
+#     this list of conditions and the following disclaimer in the documentation
+#     and/or other materials provided with the distribution.
+#
+#  3. Neither the name of the copyright holder nor the names of its
+#     contributors may be used to endorse or promote products derived from
+#     this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS”
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+# THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+# (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+# ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
+# TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+# THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+=======
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -14,6 +40,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+>>>>>>> feature/cgn
 
 ###########################################################
 #               WARNING: Generated code!                  #
@@ -34,10 +61,20 @@ Created on Wed Aug 27 2025
 """
 
 
+<<<<<<< local_main_cgn
+from compare_flexbe_states.cgn_grasp_service_state import CGNGraspServiceState as compare_flexbe_states__CGNGraspServiceState
+from compare_flexbe_states.euclidean_clustering_service_state import EuclideanClusteringServiceState as compare_flexbe_states__EuclideanClusteringServiceState
+from compare_flexbe_states.filter_by_indices_service_state import FilterByIndicesServiceState as compare_flexbe_states__FilterByIndicesServiceState
+from compare_flexbe_states.get_point_cloud_service_state import GetPointCloudServiceState as compare_flexbe_states__GetPointCloudServiceState
+from compare_flexbe_states.move_to_named_pose_service_state import MoveToNamedPoseServiceState as compare_flexbe_states__MoveToNamedPoseServiceState
+from compare_flexbe_states.move_to_pose_service_state import MoveToPoseServiceState as compare_flexbe_states__MoveToPoseServiceState
+from compare_flexbe_states.publish_point_cloud_state import PublishPointCloudState as compare_flexbe_states__PublishPointCloudState
+=======
 from compare_flexbe_states.detect_grasps_service_state import DetectGraspsServiceState
 from compare_flexbe_states.gpd_grasp_poses_service_state import GPDGraspPosesServiceState
 from compare_flexbe_states.publish_point_cloud_state import PublishPointCloudState
 from end_effector_flexbe_states.gripper_command_action_state import GripperCommandActionState
+>>>>>>> feature/cgn
 from flexbe_core import Autonomy
 from flexbe_core import Behavior
 from flexbe_core import ConcurrencyContainer
@@ -45,6 +82,8 @@ from flexbe_core import Logger
 from flexbe_core import OperatableStateMachine
 from flexbe_core import PriorityContainer
 from flexbe_core import initialize_flexbe_core
+<<<<<<< local_main_cgn
+=======
 from move_group_flexbe_states.move_to_named_pose_service_state import MoveToNamedPoseServiceState
 from mtc_flexbe_states.mtc_approach_and_pick_action_state import MTCApproachAndPickActionState
 from mtc_flexbe_states.mtc_retreat_and_place_action_state import MTCRetreatAndPlaceActionState
@@ -52,6 +91,7 @@ from pcl_flexbe_states.euclidean_clustering_service_state import EuclideanCluste
 from pcl_flexbe_states.filter_by_indices_service_state import FilterByIndicesServiceState
 from pcl_flexbe_states.get_point_cloud_service_state import GetPointCloudServiceState
 from pcl_flexbe_states.passthrough_filter_service_state import PassthroughServiceState
+>>>>>>> feature/cgn
 
 # Additional imports can be added inside the following tags
 # [MANUAL_IMPORT]
@@ -91,7 +131,11 @@ class EuclideanClusterExtractionPipeineSM(Behavior):
     def create(self):
         """Create state machine."""
         # Root state machine
+<<<<<<< local_main_cgn
+        # x:1367 y:375, x:251 y:389
+=======
         # x:2399 y:360, x:251 y:389
+>>>>>>> feature/cgn
         _state_machine = OperatableStateMachine(outcomes=['finished', 'failed'], output_keys=['target_cluster_indexed', 'scene_pointcloud'])
         _state_machine.userdata.scene_pointcloud = 0
         _state_machine.userdata.camera_pose = 0
@@ -104,6 +148,12 @@ class EuclideanClusterExtractionPipeineSM(Behavior):
         _state_machine.userdata.test_indices = []
         _state_machine.userdata.grasp_waypoints = []
         _state_machine.userdata.waypoint_index = 0
+<<<<<<< local_main_cgn
+        _state_machine.userdata.grasp_target_poses = []
+        _state_machine.userdata.grasp_index = 0
+        _state_machine.userdata.ready_pose = 'ready'
+        _state_machine.userdata.scene_id = 0
+=======
         _state_machine.userdata.grasp_index = 0
         _state_machine.userdata.ready_pose = 'ready'
         _state_machine.userdata.snapshot_pose = 'retracted'
@@ -122,6 +172,7 @@ class EuclideanClusterExtractionPipeineSM(Behavior):
         _state_machine.userdata.approach_index = 0
         _state_machine.userdata.retreat_index = 0
         _state_machine.userdata.open = 0.035
+>>>>>>> feature/cgn
 
         # Additional creation code can be added inside the following tags
         # [MANUAL_CREATE]
@@ -130,6 +181,16 @@ class EuclideanClusterExtractionPipeineSM(Behavior):
         # [/MANUAL_CREATE]
 
         with _state_machine:
+<<<<<<< local_main_cgn
+            # x:119 y:63
+            OperatableStateMachine.add('GetPointCloud',
+                                       compare_flexbe_states__GetPointCloudServiceState(service_timeout=5.0,
+                                                                                        service_name='/get_point_cloud',
+                                                                                        camera_topic='/rgbd_camera/points',
+                                                                                        target_frame='simple_pedestal'),
+                                       transitions={'finished': 'EuclideanClustering'  # 306 84 -1 -1 -1 -1
+                                                    , 'failed': 'failed'  # 236 225 228 116 -1 -1
+=======
             # x:163 y:59
             OperatableStateMachine.add('pcl_snapshot_test',
                                        GetPointCloudServiceState(service_timeout=5.0,
@@ -138,12 +199,42 @@ class EuclideanClusterExtractionPipeineSM(Behavior):
                                                                  target_frame='panda_link0'),
                                        transitions={'finished': 'PassthroughFilterPCL'  # 394 416 -1 -1 -1 -1
                                                     , 'failed': 'failed'  # 266 228 -1 -1 -1 -1
+>>>>>>> feature/cgn
                                                     },
                                        autonomy={'finished': Autonomy.Off, 'failed': Autonomy.Off},
                                        remapping={'camera_pose': 'camera_pose',
                                                   'cloud_out': 'scene_pointcloud',
                                                   'cloud_frame': 'cloud_frame'})
 
+<<<<<<< local_main_cgn
+            # x:836 y:61
+            OperatableStateMachine.add('CgnGrasp',
+                                       compare_flexbe_states__CGNGraspServiceState(service_timeout=5.0,
+                                                                                   service_name='/get_grasps',
+                                                                                   use_scene_id=False,
+                                                                                   field_names=None),
+                                       transitions={'done': 'PublishPointCloud',
+                                                    'failed': 'failed'  # 692 272 -1 -1 -1 -1
+                                                    },
+                                       autonomy={'done': Autonomy.Off, 'failed': Autonomy.Off},
+                                       remapping={'cloud_in': 'point_cloud_visual',
+                                                  'scene_id': 'scene_id',
+                                                  'indices': 'test_indices',
+                                                  'grasp_target_poses': 'grasp_target_poses',
+                                                  'grasp_scores': 'grasp_scores',
+                                                  'grasp_samples': 'grasp_samples',
+                                                  'grasp_object_ids': 'grasp_object_ids'})
+
+            # x:344 y:61
+            OperatableStateMachine.add('EuclideanClustering',
+                                       compare_flexbe_states__EuclideanClusteringServiceState(service_timeout=5.0,
+                                                                                              service_name='/euclidean_clustering',
+                                                                                              cluster_tolerance=0.02,
+                                                                                              min_cluster_size=100,
+                                                                                              max_cluster_size=25000),
+                                       transitions={'finished': 'FilterByIndices'  # 553 60 -1 -1 -1 -1
+                                                    , 'failed': 'failed'  # 400 213 406 114 -1 -1
+=======
             # x:2112 y:63
             OperatableStateMachine.add('CloseGripper',
                                        GripperCommandActionState(timeout_sec=5.0,
@@ -193,6 +284,7 @@ class EuclideanClusterExtractionPipeineSM(Behavior):
                                                                        max_cluster_size=25000),
                                        transitions={'finished': 'FilterByIndicesPCL'  # 609 80 -1 -1 -1 -1
                                                     , 'failed': 'failed'  # 677 232 -1 -1 -1 -1
+>>>>>>> feature/cgn
                                                     },
                                        autonomy={'finished': Autonomy.Off, 'failed': Autonomy.Off},
                                        remapping={'cloud_in': 'scene_pointcloud',
@@ -200,18 +292,57 @@ class EuclideanClusterExtractionPipeineSM(Behavior):
                                                   'target_cluster_indices': 'target_cluster_indices',
                                                   'obstacle_cluster_indices': 'obstacle_cluster_indices'})
 
+<<<<<<< local_main_cgn
+            # x:595 y:57
+            OperatableStateMachine.add('FilterByIndices',
+                                       compare_flexbe_states__FilterByIndicesServiceState(service_timeout=5.0,
+                                                                                          service_name='/filter_by_indices'),
+                                       transitions={'finished': 'CgnGrasp',
+                                                    'failed': 'failed'  # 642 229 -1 -1 -1 -1
+=======
             # x:648 y:59
             OperatableStateMachine.add('FilterByIndicesPCL',
                                        FilterByIndicesServiceState(service_timeout=5.0,
                                                                    service_name='/filter_by_indices'),
                                        transitions={'finished': 'DetectGrasps'  # 839 70 -1 -1 -1 -1
                                                     , 'failed': 'failed'  # 807 232 -1 -1 -1 -1
+>>>>>>> feature/cgn
                                                     },
                                        autonomy={'finished': Autonomy.Off, 'failed': Autonomy.Off},
                                        remapping={'cloud_in': 'scene_pointcloud',
                                                   'target_indices': 'target_cluster_indices',
                                                   'cloud_out': 'point_cloud_visual'})
 
+<<<<<<< local_main_cgn
+            # x:1589 y:59
+            OperatableStateMachine.add('MoveOMPL',
+                                       compare_flexbe_states__MoveToPoseServiceState(timeout_sec=5.0,
+                                                                                     service_name='/move_to_pose'),
+                                       transitions={'done': 'finished'  # 1470 315 -1 -1 -1 -1
+                                                    , 'next': 'MoveOMPL', 'failed': 'failed'  # 1551 413 -1 -1 -1 -1
+                                                    },
+                                       autonomy={'done': Autonomy.Off,
+                                                 'next': Autonomy.Off,
+                                                 'failed': Autonomy.Off},
+                                       remapping={'grasp_poses': 'grasp_target_poses',
+                                                  'grasp_index': 'grasp_index'})
+
+            # x:1301 y:61
+            OperatableStateMachine.add('MoveReady',
+                                       compare_flexbe_states__MoveToNamedPoseServiceState(service_timeout=5.0,
+                                                                                          service_name='/move_to_named_pose'),
+                                       transitions={'finished': 'MoveOMPL'  # 1525 80 -1 -1 -1 -1
+                                                    , 'failure': 'failed'  # 1202 320 -1 -1 -1 -1
+                                                    },
+                                       autonomy={'finished': Autonomy.Off, 'failure': Autonomy.Off},
+                                       remapping={'target_pose_name': 'ready_pose'})
+
+            # x:1055 y:58
+            OperatableStateMachine.add('PublishPointCloud',
+                                       compare_flexbe_states__PublishPointCloudState(pub_topic='/filtered_cloud/target_object'),
+                                       transitions={'done': 'MoveReady',
+                                                    'failed': 'failed'  # 1099 244 -1 -1 -1 -1
+=======
             # x:1865 y:64
             OperatableStateMachine.add('MTCApproachAndPick',
                                        MTCApproachAndPickActionState(timeout_sec=5.0,
@@ -295,6 +426,7 @@ class EuclideanClusterExtractionPipeineSM(Behavior):
                                        PublishPointCloudState(pub_topic='/filtered_cloud/target_object'),
                                        transitions={'done': 'ComputePoses'  # 1307 74 -1 -1 -1 -1
                                                     , 'failed': 'failed'  # 1145 244 -1 -1 -1 -1
+>>>>>>> feature/cgn
                                                     },
                                        autonomy={'done': Autonomy.Off, 'failed': Autonomy.Off},
                                        remapping={'cloud_in': 'point_cloud_visual'})

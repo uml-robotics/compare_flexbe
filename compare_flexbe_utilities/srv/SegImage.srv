@@ -1,0 +1,5 @@
+string image_name     # e.g., "000007"
+---
+bool success
+string json_result    # JSON string with paths / labels
+string log_output     # stdout/stderr from docker

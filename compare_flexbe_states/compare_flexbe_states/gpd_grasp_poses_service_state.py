@@ -48,7 +48,7 @@ class GPDGraspPosesServiceState(EventState):
 
         super().__init__(outcomes=['done', 'failed'],
                             input_keys=['grasp_configs'],
-                            output_keys=['grasp_target_poses', 'grasp_approach_poses', 'grasp_retreat_poses', 'grasp_waypoints']
+                            output_keys=['grasp_target_poses', 'grasp_approach_poses', 'grasp_waypoints']
         )
         self._service_name = service_name
         self._service_timeout = service_timeout
@@ -74,12 +74,11 @@ class GPDGraspPosesServiceState(EventState):
             # Keep the raw lists if you still want them
             userdata.grasp_target_poses = self._res.target_poses
             userdata.grasp_approach_poses = self._res.approach_poses
-            userdata.grasp_retreat_poses = self._res.retreat_poses
 
             # Build list-of-sets: [[approach0, target0], [approach1, target1], ...]
             # zip() will truncate to the shorter list if lengths differ.
             userdata.grasp_waypoints = [
-                [a, t, r] for a, t, r in zip(self._res.approach_poses, self._res.target_poses, self._res.retreat_poses)
+                [a, t] for a, t in zip(self._res.approach_poses, self._res.target_poses)
             ]
             Logger.loginfo(f"[{type(self).__name__}] Received grasp poses list with {len(self._res.target_poses)} poses.")
         except Exception as e:

@@ -64,6 +64,24 @@ private:
       marker_pub_->publish(m);
 
       move_group_->setPoseTarget(req->target_pose);
+<<<<<<< local_main_cgn
+  
+      auto marker_pub_ = this->create_publisher<visualization_msgs::msg::Marker>("debug_goal_marker", 1);
+
+      visualization_msgs::msg::Marker m;
+      m.header.stamp = this->now();
+      m.header.frame_id = "simple_pedestal";
+      // m.header.frame_id = "panda_link0";
+      m.ns = "move_to_pose_goal";
+      m.id = 0;
+      m.type = visualization_msgs::msg::Marker::SPHERE;
+      m.action = visualization_msgs::msg::Marker::ADD;
+      m.pose = req->target_pose;              // exactly what you're planning to
+      m.scale.x = m.scale.y = m.scale.z = 0.03;
+      m.color.a = 1.0; m.color.r = 0.1; m.color.g = 0.8; m.color.b = 0.2;
+      marker_pub_->publish(m);
+=======
+>>>>>>> feature/cgn
 
       moveit::planning_interface::MoveGroupInterface::Plan plan;
       move_group_->setPlanningTime(3.0);

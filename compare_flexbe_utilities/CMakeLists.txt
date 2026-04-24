@@ -100,6 +100,7 @@ ament_target_dependencies(euclidean_clustering_service
   geometry_msgs
   pcl_conversions
   pcl_msgs
+#   gpd_ros
 )
 target_link_libraries(euclidean_clustering_service ${PCL_LIBRARIES})
 
@@ -129,18 +130,20 @@ ament_target_dependencies(filter_by_indices_service
 )
 target_link_libraries(filter_by_indices_service ${PCL_LIBRARIES})
 
-add_executable(mtc_plan_and_execute_pick_action src/mtc_plan_and_execute_pick_action.cpp)
-ament_target_dependencies(mtc_plan_and_execute_pick_action
+add_executable(reach_to_grasp_service src/reach_to_grasp_service.cpp)
+ament_target_dependencies(reach_to_grasp_service
   rclcpp
-  rclcpp_action
   geometry_msgs
-  moveit_core
-  moveit_task_constructor_core
-  moveit_task_constructor_msgs
+  visualization_msgs
   moveit_ros_planning_interface
+  moveit_msgs
+  tf2
+  tf2_geometry_msgs
+  std_srvs
 )
+target_link_libraries(reach_to_grasp_service ${PCL_LIBRARIES})
 
-install(TARGETS 
+install(TARGETS
   cartesian_move_to_pose_service
   move_to_named_pose_service
   move_to_pose_service
@@ -149,8 +152,9 @@ install(TARGETS
   euclidean_clustering_service
   get_point_cloud_service
   filter_by_indices_service
-  mtc_plan_and_execute_pick_action
-  DESTINATION lib/${PROJECT_NAME})
+  reach_to_grasp_service
+  DESTINATION lib/${PROJECT_NAME}
+)
 
 # Link generated service headers
 rosidl_get_typesupport_target(cpp_typesupport_target ${PROJECT_NAME} "rosidl_typesupport_cpp")
@@ -162,7 +166,7 @@ target_link_libraries(plane_segmentation_service ${cpp_typesupport_target})
 target_link_libraries(euclidean_clustering_service ${cpp_typesupport_target})
 target_link_libraries(get_point_cloud_service ${cpp_typesupport_target})
 target_link_libraries(filter_by_indices_service ${cpp_typesupport_target})
-target_link_libraries(mtc_plan_and_execute_pick_action ${cpp_typesupport_target})
+target_link_libraries(reach_to_grasp_service ${cpp_typesupport_target})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

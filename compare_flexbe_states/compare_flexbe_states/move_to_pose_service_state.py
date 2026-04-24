@@ -21,7 +21,6 @@ from flexbe_core import EventState, Logger
 from flexbe_core.proxy import ProxyServiceCaller
 
 from compare_flexbe_utilities.srv import MoveToPose as SrvType
-from gpd_ros.msg import GraspConfig
 from geometry_msgs.msg import Pose
 
 class MoveToPoseServiceState(EventState):
@@ -39,7 +38,7 @@ class MoveToPoseServiceState(EventState):
 
     def __init__(self, timeout_sec=5.0, service_name='/move_to_pose'):
         super().__init__(outcomes=['done', 'next', 'failed'],
-                            input_keys=['grasp_poses', 'grasp_index', 'grasp_configs'],
+                            input_keys=['grasp_poses', 'grasp_index'],
                             output_keys=['grasp_index']
         )
         self._timeout_sec = timeout_sec
@@ -64,10 +63,11 @@ class MoveToPoseServiceState(EventState):
 
         try:
             Logger.loginfo(f"[{type(self).__name__}] Finished plan with result: {self._res.success}.")
-            if self._res.success == 1 :
+            # if self._res.success == 1:
+            if self._res.success == 1 and userdata.grasp_index >= 10:
                 return 'done'
             if (userdata.grasp_index + 1) < len(userdata.grasp_poses):
-                userdata.grasp_index += 1
+                userdata.grasp_index = userdata.grasp_index + 1
                 return 'next'
             else:
                 # This was the last set of waypoints
@@ -99,20 +99,6 @@ class MoveToPoseServiceState(EventState):
         # construct request
         request = SrvType.Request()
         request.target_pose = grasp_poses[idx]
-        grasp_config = userdata.grasp_configs.grasps[idx]
-
-        # logging for error checking
-        def _fmt_pose(p):
-            return (f"pos=({p.pose.position.x:.3f}, {p.pose.position.y:.3f}, {p.pose.position.z:.3f})  "
-                    f"quat=({p.pose.orientation.x:.3f}, {p.pose.orientation.y:.3f}, "
-                    f"{p.pose.orientation.z:.3f}, {p.pose.orientation.w:.3f})")
-        # logging for error checking
-        def _fmt_position(p):
-            return (f"pos=({p.position.x:.3f}, {p.position.y:.3f}, {p.position.z:.3f})")
-
-        # Pose
-        Logger.logerr("[MoveToPose] Pose " + _fmt_pose(request.target_pose))
-        Logger.logerr("[MoveToPose] GPDPose " + _fmt_position(grasp_config))
 
         # wait for availability (once per entry)
         if not self._srv.is_available(self._service_name):
