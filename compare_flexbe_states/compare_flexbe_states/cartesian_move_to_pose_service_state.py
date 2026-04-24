@@ -23,6 +23,7 @@ from flexbe_core.proxy import ProxyServiceCaller
 from compare_flexbe_utilities.srv import CartesianMoveToPose as SrvType
 from geometry_msgs.msg import Pose
 
+
 class CartesianMoveToPoseServiceState(EventState):
     """
     Calls a ROS 2 service to move the robot in Cartesian space using waypoints using the computeCartesianPath and execute C++ function wrapped into a service server.

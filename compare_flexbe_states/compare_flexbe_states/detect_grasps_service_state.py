@@ -40,6 +40,7 @@ class DetectGraspsServiceState(EventState):
     ># camera_source      std_msgs/Int64[]          For each point in the cloud, the index of the camera that acquired the point
     ># view_points        geometry_msgs/Point[]     A list of camera positions at which the point cloud was acquired
     ># indices            std_msgs/Int64[]          The indices into the point cloud at which to sample grasp candidates
+
     <# grasp_configs      gpd_ros/GraspConfigList   The output from the service
 
     <= done               Service call succeeded

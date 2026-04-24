@@ -25,7 +25,6 @@ from compare_flexbe_utilities.srv import MoveToNamedPose as SrvType
 class MoveToNamedPoseServiceState(EventState):
     """
     Calls a service to move the robot to a named pose using the setNamedTarget, plan and execute C++ functions wrapped into a service server.
-
     -- timeout_sec        float         Timeout for waiting for service (default: 5.0)
     -- service_name       str           Service name (default: '/move_to_named_pose')
 
