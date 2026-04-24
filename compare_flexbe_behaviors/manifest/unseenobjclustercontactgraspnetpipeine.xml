@@ -7,11 +7,7 @@
     <author>Huajing Zhao</author>
     <date>Dec 07 2025</date>
     <description>
-<<<<<<< HEAD
         Use compare_flexbe package: A perception-to-action pipeline which employs unseen-object-clustering for
-=======
-        A perception-to-action pipeline which employs unseen-object-clustering for
->>>>>>> legacy-feature-cgn
         object segmentation from a
         scene and choose a target for grasping, then contact-graspnet for grasp
         planning and OMPL for manipulation via MoveIt
